@@ -14,46 +14,39 @@ Estoque (Inventory Service): Controlo de disponibilidade de produtos.
 
 Pagamentos (Payment Service): Processamento de transações.
 
+📦 Imagens Docker Publicadas
+
+As imagens oficiais deste projeto estão disponíveis no Docker Hub:
+
+api-gateway
+
+pedidos
+
+estoque
+
+pagamentos
+
 🛠️ Tecnologias Utilizadas
 
 Backend: Node.js
 
-Containerização: Docker & Docker Compose
+Containerização: Docker
 
-Orquestração: Kubernetes (EKS na AWS)
-
-Infraestrutura como Código: Terraform
-
-CI/CD: GitHub Actions
+CI/CD: GitHub Actions (Automático via Push)
 
 🚀 Como Executar Localmente
-
-Para rodar todo o ecossistema na sua máquina, utilize o Docker Compose:
 
 docker-compose up --build
 
 
-A API ficará disponível em http://localhost:8080 (via API Gateway).
+A API ficará disponível em http://localhost:8080.
 
-☁️ Deploy na Nuvem
-
-A infraestrutura é gerida pelo Terraform na pasta /infrastructure/terraform.
-Para provisionar o cluster Kubernetes:
-
-terraform init
-
-terraform plan
-
-terraform apply
-
-🤖 Automação (CI/CD)
+🤖 Pipeline de CI/CD
 
 O projeto utiliza GitHub Actions para:
 
-Validar o código: Roda testes e verificações de sintaxe.
+Realizar o Login seguro no Docker Hub.
 
-Construir imagens Docker: Gera as imagens de cada serviço automaticamente.
+Construir as imagens para a arquitetura Linux.
 
-Enviar para o Docker Hub: Armazena as imagens usando os Secrets (DOCKERHUB_USERNAME e DOCKERHUB_TOKEN).
-
-Atualizar o cluster Kubernetes: Aplica as novas imagens no ambiente de produção.
+Publicar automaticamente no perfil luiza12pp.
