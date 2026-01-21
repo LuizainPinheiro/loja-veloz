@@ -17,7 +17,7 @@ services:
   pedidos:
     build: ./services/pedidos
     env_file: .env
-    # Porta 3000 interna (acessível apenas via Gateway ou outros serviços)
+    # Porta 3000 interna
     depends_on:
       database:
         condition: service_healthy

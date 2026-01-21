@@ -14,7 +14,6 @@ const dbConfig = {
 // Função para buscar dados do outro microsserviço (Estoque)
 const buscarEstoque = () => {
   return new Promise((resolve) => {
-    // Note que usamos o nome do serviço 'estoque' definido no docker-compose
     http.get('http://estoque:3001/estoque', (res) => {
       let data = '';
       res.on('data', (chunk) => data += chunk);
