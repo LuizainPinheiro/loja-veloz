@@ -20,30 +20,26 @@ jobs:
 
     - name: Build e Push das Imagens
       run: |
-        # Definimos o caminho absoluto para evitar erros de contexto
-        BASE_DIR=$(pwd)
+        # Limpa espaços ou quebras de linha que possam vir dos secrets
+        USER_CLEAN=$(echo "${{ secrets.DOCKERHUB_USERNAME }}" | tr -d '[:space:]')
+        
         services=("api-gateway" "pedidos" "estoque" "pagamentos")
         
         for svc in "${services[@]}"; do
           echo "------------------------------------------"
-          echo "🔨 Construindo: $svc"
+          echo "🔨 Construindo: $svc para o usuário: $USER_CLEAN"
           
-          # Construímos a tag da imagem
-          IMAGE_TAG="${{ secrets.DOCKERHUB_USERNAME }}/$svc:latest"
-          # Definimos o caminho da pasta do serviço
-          CONTEXT_PATH="$BASE_DIR/services/$svc"
+          IMAGE_TAG="$USER_CLEAN/$svc:latest"
+          CONTEXT_PATH="./services/$svc"
           
           if [ -d "$CONTEXT_PATH" ]; then
-            # Executamos o build passando o contexto de forma absoluta
+            # Build com a tag limpa
             docker build -t "$IMAGE_TAG" "$CONTEXT_PATH"
             
             echo "🚀 Enviando: $IMAGE_TAG"
             docker push "$IMAGE_TAG"
           else
-            echo "❌ Erro: Diretório $CONTEXT_PATH não encontrado!"
+            echo "❌ Erro: Pasta $CONTEXT_PATH não encontrada!"
             exit 1
           fi
         done
-
-    - name: Finalização
-      run: echo "Pipeline concluído! Verifique o seu Docker Hub."
