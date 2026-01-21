@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: estoque-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: estoque
+  template:
+    metadata:
+      labels:
+        app: estoque
+    spec:
+      containers:
+      - name: estoque
+      image: estoque-service:latest # Imagem Docker específica do serviço de estoque
+      ports:
+        - containerPort: 3001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: estoque
+spec:
+  selector:
+    app: estoque
+  ports:
+    - protocol: TCP
+      port: 3001
+      targetPort: 3001
