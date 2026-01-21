@@ -15,26 +15,34 @@ jobs:
     - name: Login no Docker Hub
       uses: docker/login-action@v2
       with:
-        # Pega o valor 'luiza12pp' que você salvou no GitHub Secrets
         username: ${{ secrets.DOCKERHUB_USERNAME }}
-        # Pega o Token dckr_pat_... que você salvou no GitHub Secrets
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build e Push das Imagens
       run: |
-        # Lista dos serviços (devem ser os nomes exatos das pastas em /services)
+        # Definimos o caminho absoluto para evitar erros de contexto
+        BASE_DIR=$(pwd)
         services=("api-gateway" "pedidos" "estoque" "pagamentos")
         
         for svc in "${services[@]}"; do
           echo "------------------------------------------"
           echo "🔨 Construindo: $svc"
           
-          # CORREÇÃO AQUI: O nome da imagem agora usa obrigatoriamente o seu usuário
-          # Isso evita o erro 'denied' ao tentar enviar para 'meu-usuario'
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/$svc:latest ./services/$svc
+          # Construímos a tag da imagem
+          IMAGE_TAG="${{ secrets.DOCKERHUB_USERNAME }}/$svc:latest"
+          # Definimos o caminho da pasta do serviço
+          CONTEXT_PATH="$BASE_DIR/services/$svc"
           
-          echo "🚀 Enviando para docker.io/${{ secrets.DOCKERHUB_USERNAME }}/$svc"
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/$svc:latest
+          if [ -d "$CONTEXT_PATH" ]; then
+            # Executamos o build passando o contexto de forma absoluta
+            docker build -t "$IMAGE_TAG" "$CONTEXT_PATH"
+            
+            echo "🚀 Enviando: $IMAGE_TAG"
+            docker push "$IMAGE_TAG"
+          else
+            echo "❌ Erro: Diretório $CONTEXT_PATH não encontrado!"
+            exit 1
+          fi
         done
 
     - name: Finalização
