@@ -27,7 +27,7 @@ jobs:
         
         for svc in "${services[@]}"; do
           echo "------------------------------------------"
-          echo "🔨 Construindo: $svc para o usuário: $USER_CLEAN"
+          echo "Construindo: $svc para o usuário: $USER_CLEAN"
           
           IMAGE_TAG="$USER_CLEAN/$svc:latest"
           CONTEXT_PATH="./services/$svc"
@@ -36,10 +36,10 @@ jobs:
             # Build com a tag limpa
             docker build -t "$IMAGE_TAG" "$CONTEXT_PATH"
             
-            echo "🚀 Enviando: $IMAGE_TAG"
+            echo "Enviando: $IMAGE_TAG"
             docker push "$IMAGE_TAG"
           else
-            echo "❌ Erro: Pasta $CONTEXT_PATH não encontrada!"
+            echo "Erro: Pasta $CONTEXT_PATH não encontrada!"
             exit 1
           fi
         done

@@ -1,8 +1,8 @@
-🚀 Loja Veloz - Microserviços & Cloud Native
+LOJA VELOZ - Microserviços & Cloud Native
 
 Este projeto é uma plataforma de e-commerce baseada em arquitetura de microsserviços, projetada para ser escalável, resiliente e totalmente automatizada.
 
-🏗️ Arquitetura
+ARQUITETURA
 
 A aplicação é dividida em 4 serviços principais:
 
@@ -14,7 +14,7 @@ Estoque (Inventory Service): Controlo de disponibilidade de produtos.
 
 Pagamentos (Payment Service): Processamento de transações.
 
-📦 Imagens Docker Publicadas
+- Imagens Docker Publicadas
 
 As imagens oficiais deste projeto estão disponíveis no Docker Hub:
 
@@ -26,7 +26,7 @@ estoque
 
 pagamentos
 
-🛠️ Tecnologias Utilizadas
+- Tecnologias Utilizadas
 
 Backend: Node.js
 
@@ -34,14 +34,14 @@ Containerização: Docker
 
 CI/CD: GitHub Actions (Automático via Push)
 
-🚀 Como Executar Localmente
+- Como Executar Localmente
 
 docker-compose up --build
 
 
 A API ficará disponível em http://localhost:8080.
 
-🤖 Pipeline de CI/CD
+- Pipeline de CI/CD
 
 O projeto utiliza GitHub Actions para:
 
